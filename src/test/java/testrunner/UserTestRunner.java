@@ -8,14 +8,21 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.commons.configuration.ConfigurationException;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utils.Utils;
 //import org.junit.jupiter.api.Test;
 
 public class UserTestRunner extends Setup {
+    UserController userController;
+
+    @BeforeClass
+    public void createUserControllerObj(){
+        userController = new UserController(prop);
+    }
+
     @Test(priority = 1, description = "User Login")
     public void doLogin() throws ConfigurationException {
-        UserController userController = new UserController(prop);
         UserModel userModel = new UserModel();
         userModel.setEmail("admin@roadtocareer.net");
         userModel.setPassword("1234");
@@ -27,7 +34,6 @@ public class UserTestRunner extends Setup {
 
     @Test(priority = 2, description = "Create new user")
     public void createUser() throws ConfigurationException {
-        UserController userController = new UserController(prop);
         UserModel userModel = new UserModel();
         Faker fk = new Faker();
         userModel.setName(fk.name().fullName());
@@ -47,7 +53,6 @@ public class UserTestRunner extends Setup {
 
     @Test(priority = 3, description = "Search user")
     public void searchUser(){
-        UserController userController = new UserController(prop);
         Response res = userController.searchUser(prop.getProperty("userId"));
         System.out.println(res.asString());
 
@@ -60,7 +65,6 @@ public class UserTestRunner extends Setup {
 
     @Test(priority = 4, description = "Delete user")
     public void deleteUser(){
-        UserController userController = new UserController(prop);
         System.out.println(prop.getProperty("userId"));
         Response res = userController.deleteUser(prop.getProperty("userId"));
         System.out.println(res.asString());
