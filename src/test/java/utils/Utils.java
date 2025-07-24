@@ -1,3 +1,5 @@
+package utils;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -8,5 +10,13 @@ public class Utils {
         config.save();
 
     }
+
+    public static int generateRandomNumber(int min, int max){
+        double randomNumber = Math.random()*(max-min)+min;
+        return (int) randomNumber;
+
+    }
+
+
 
 }
